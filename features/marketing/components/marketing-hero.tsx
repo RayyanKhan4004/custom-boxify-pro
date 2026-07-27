@@ -22,20 +22,26 @@ export function MarketingHero() {
           Boxify
         </a>
         <a className="nav-link" href="#contact">
-          Join the waitlist <ArrowUpRightIcon aria-hidden="true" weight="bold" />
+          Join the waitlist{" "}
+          <ArrowUpRightIcon aria-hidden="true" weight="bold" />
         </a>
       </nav>
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow">
-            <SparkleIcon aria-hidden="true" weight="fill" /> Custom packaging, made personal
+            <SparkleIcon aria-hidden="true" weight="fill" /> Custom packaging,
+            made personal
           </p>
           <p className="coming-soon-label">Coming soon</p>
           <h1 id="hero-title">Your next box starts here.</h1>
-          <p className="hero-description">We’re shaping a better way to create custom packaging—from the first sketch to the final unboxing.</p>
+          <p className="hero-description">
+            We’re shaping a better way to create custom packaging—from the first
+            sketch to the final unboxing.
+          </p>
           <a className="hero-cta" href="#contact">
-            Get launch updates <ArrowUpRightIcon aria-hidden="true" weight="bold" />
+            Get launch updates{" "}
+            <ArrowUpRightIcon aria-hidden="true" weight="bold" />
           </a>
         </div>
 
@@ -82,17 +88,7 @@ export function MarketingHero() {
         </motion.div>
       </section>
 
-      <section
-        className="trust-row"
-        id="contact"
-        aria-label="Boxify highlights"
-      >
-        <p>Low minimums</p>
-        <span />
-        <p>Fast turnaround</p>
-        <span />
-        <p>Made for your brand</p>
-      </section>
+  
     </main>
   );
 }

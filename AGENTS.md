@@ -10,6 +10,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - Keep routes in `app/` thin. Place domain UI, queries, types, and API clients in `features/<feature>/`.
 - Use the `@/` import alias and shared primitives from `components/ui/` before introducing new UI patterns.
+- Store custom SVGs in `components/icons` and import them as React components through SVGR. Use direct imports for one-off assets and named exports from `components/icons/index.ts` for shared icons.
+- Use `@phosphor-icons/react` for general UI icons. Use custom SVG components for brand or design-specific artwork; fixed SVG fills will not respond to Tailwind `text-*` classes.
 - Put semantic colors and font families in `app/globals.css` CSS variables. Do not use raw colour values in TSX.
 - Use semantic color names such as `--primary`, `--background`, `--foreground`, `--muted-foreground`, and `--border`; do not add Figma-prefixed aliases.
 - Use `--font-display` and `--font-body` for Renner typography. Renner is a licensed local font: add its WOFF2 files before relying on it as the rendered production face.
