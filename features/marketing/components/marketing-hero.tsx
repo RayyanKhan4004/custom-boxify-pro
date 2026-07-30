@@ -3,15 +3,9 @@ import {
   InstagramNegativeIcon,
   LinkedInNegativeIcon,
 } from "@/components/icons";
+import { MarketingCountdown } from "@/features/marketing/components/marketing-countdown";
 import Image from "next/image";
 import Link from "next/link";
-
-const countdownItems = [
-  { label: "Days", value: "15" },
-  { label: "Hours", value: "20" },
-  { label: "Mins", value: "59" },
-  { label: "Sec", value: "36" },
-] as const;
 
 const socialLinks = [
   { Icon: FacebookNegativeIcon, label: "Facebook" },
@@ -35,21 +29,7 @@ export function MarketingHero() {
             launching soon.
           </p>
 
-          <dl className="mt-7 grid grid-cols-4 gap-2 min-[480px]:gap-4 min-[640px]:flex min-[640px]:gap-6">
-            {countdownItems.map((item) => (
-              <div
-                className="flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-[10px] border border-(--primary) text-(--primary) min-[640px]:size-25 min-[640px]:gap-1.5"
-                key={item.label}
-              >
-                <dt className="order-2 text-xs min-[480px]:text-sm">
-                  {item.label}
-                </dt>
-                <dd className="order-1 text-2xl font-semibold leading-none tracking-tight min-[480px]:text-[32px] min-[480px]:leading-10">
-                  {item.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <MarketingCountdown />
 
           <div className="mt-8 min-[640px]:mt-12">
             <p className="text-base text-(--muted-foreground) min-[640px]:text-lg">
