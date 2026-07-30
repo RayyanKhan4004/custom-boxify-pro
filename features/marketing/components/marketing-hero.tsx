@@ -39,11 +39,11 @@ export function MarketingHero() {
               {socialLinks.map(({ Icon, label }) => (
                 <Link
                   aria-label={label}
-                  className="text-(--foreground) hover:text-(--primary) transition-all duration-500 hover:scale-3d hover:scale-110"
+                  className="flex size-8 items-center justify-center text-(--foreground) transition-all duration-500 hover:scale-110 hover:text-(--primary)"
                   href="#"
                   key={label}
                 >
-                  <Icon className="size-7 min-[640px]:size-8" />
+                  <Icon className="size-7 overflow-visible min-[640px]:size-8" />
                 </Link>
               ))}
             </div>
