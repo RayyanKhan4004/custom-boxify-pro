@@ -29,6 +29,16 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "Packaging",
+  icons: {
+    icon: [
+      {
+        url: "/icon.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+    ],
+    shortcut: "/icon.png",
+  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -78,7 +88,7 @@ export default function RootLayout({
         "@id": `${siteConfig.url}/#organization`,
         name: siteConfig.name,
         url: siteConfig.url,
-        logo: `${siteConfig.url}/icon.svg`,
+        logo: `${siteConfig.url}/icon.png`,
         description: siteConfig.description,
         contactPoint: {
           "@type": "ContactPoint",
