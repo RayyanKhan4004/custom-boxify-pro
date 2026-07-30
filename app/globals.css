@@ -53,3 +53,81 @@
 .font-renner {
   font-family: var(--font-body);
 }
+
+@keyframes hero-box-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes hero-box-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(1deg);
+  }
+}
+
+@keyframes hero-box-drift-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(1deg);
+  }
+  50% {
+    transform: translate3d(0, 12px, 0) rotate(-1deg);
+  }
+}
+
+@keyframes hero-box-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate3d(-50%, -50%, 0) scale(0.9);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate3d(-50%, -50%, 0) scale(1.08);
+  }
+}
+
+.hero-box-float {
+  animation: hero-box-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-box-drift {
+  animation: hero-box-drift 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-box-drift-slow {
+  animation: hero-box-drift 10s ease-in-out -2s infinite;
+  will-change: transform;
+}
+
+.hero-box-drift-reverse {
+  animation: hero-box-drift-reverse 9s ease-in-out -4s infinite;
+  will-change: transform;
+}
+
+.hero-box-glow {
+  animation: hero-box-glow 5s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-box-float,
+  .hero-box-drift,
+  .hero-box-drift-slow,
+  .hero-box-drift-reverse,
+  .hero-box-glow {
+    animation: none;
+    will-change: auto;
+  }
+}

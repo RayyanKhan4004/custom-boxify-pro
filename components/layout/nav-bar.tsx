@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion, type Transition, useReducedMotion } from "framer-motion";
 import { ListIcon, XIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
@@ -32,12 +31,10 @@ function NavigationLinks({ onNavigate }: NavigationLinksProps) {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const transition: Transition = reduceMotion ? { duration: 0 } : { duration: 0.2, ease: "easeOut" };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-b-(--border) bg-(--background)">
-      <div className="relative mx-auto flex w-full max-w-[90rem] items-center justify-between gap-10 px-6 py-4 min-[1120px]:px-15 min-[1120px]:py-4.5">
+    <header className="sticky top-0 z-50 h-20 w-full border-b border-b-(--border) bg-(--background)">
+      <div className="relative mx-auto flex h-20 w-full max-w-[90rem] items-center justify-between gap-10 px-6 min-[1120px]:px-15">
         <BrandLogoMark className="h-auto w-[51px] overflow-visible min-[1120px]:hidden" />
         <BrandLogo className="hidden h-auto w-[294px] overflow-visible min-[1120px]:block" />
 
@@ -62,27 +59,21 @@ export default function Navbar() {
         </button>
       </div>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            animate={{ height: "auto", opacity: 1 }}
-            className="overflow-hidden border-t border-t-(--border) bg-(--background) min-[1120px]:hidden"
-            exit={{ height: 0, opacity: 0 }}
-            id="mobile-navigation"
-            initial={{ height: 0, opacity: 0 }}
-            transition={transition}
-          >
-            <ul className="flex list-none flex-col gap-6 p-6">
-              <NavigationLinks onNavigate={() => setIsOpen(false)} />
-              <li>
-                <Button className="h-11.25" variant="outline">
-                  <a href="mailto:mohamd.27125@gamil.com" onClick={() => setIsOpen(false)}>Get A Quote</a>
-                </Button>
-              </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div
+          className="overflow-hidden border-t border-t-(--border) bg-(--background) min-[1120px]:hidden"
+          id="mobile-navigation"
+        >
+          <ul className="flex list-none flex-col gap-6 p-6">
+            <NavigationLinks onNavigate={() => setIsOpen(false)} />
+            <li>
+              <Button className="h-11.25" variant="outline">
+                <a href="mailto:mohamd.27125@gamil.com" onClick={() => setIsOpen(false)}>Get A Quote</a>
+              </Button>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 }
