@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## SEO configuration
+
+The canonical production domain is `https://www.customboxifypro.com`. Copy
+`.env.example` to `.env.local` when a deployment needs to override it with
+`NEXT_PUBLIC_SITE_URL`. This value is used for canonical URLs, Open Graph
+metadata, JSON-LD, `robots.txt`, and `sitemap.xml`.
+
+After deployment, submit `/sitemap.xml` in Google Search Console and optionally
+set `GOOGLE_SITE_VERIFICATION` to the verification token supplied by Google.
+
 ## Getting Started
 
 First, run the development server:
