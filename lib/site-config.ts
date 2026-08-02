@@ -22,4 +22,6 @@ export const siteConfig = {
   contactPhone: "+923366704385",
   googleSiteVerification:
     process.env.GOOGLE_SITE_VERIFICATION ?? DEFAULT_GOOGLE_SITE_VERIFICATION,
+  bingSiteVerification: process.env.BING_SITE_VERIFICATION,
+  yandexSiteVerification: process.env.YANDEX_SITE_VERIFICATION,
 } as const;

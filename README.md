@@ -10,6 +10,15 @@ metadata, JSON-LD, `robots.txt`, and `sitemap.xml`.
 After deployment, submit `/sitemap.xml` in Google Search Console and optionally
 set `GOOGLE_SITE_VERIFICATION` to the verification token supplied by Google.
 
+For Bing and other IndexNow-compatible search engines, add the site to Bing
+Webmaster Tools, submit `/sitemap.xml`, and set `BING_SITE_VERIFICATION` when
+using HTML meta-tag verification. After each production deployment, notify
+participating search engines about every URL in the sitemap:
+
+```bash
+npm run seo:submit-indexnow
+```
+
 ## Getting Started
 
 First, run the development server:

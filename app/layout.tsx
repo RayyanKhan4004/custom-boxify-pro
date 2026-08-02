@@ -74,6 +74,12 @@ export const metadata: Metadata = {
   },
   verification: {
     google: siteConfig.googleSiteVerification,
+    yandex: siteConfig.yandexSiteVerification,
+    other: siteConfig.bingSiteVerification
+      ? {
+          "msvalidate.01": siteConfig.bingSiteVerification,
+        }
+      : undefined,
   },
 };
 
