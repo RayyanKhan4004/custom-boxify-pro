@@ -59,7 +59,7 @@ export function MarketingCountdown() {
     <dl className="mt-7 grid grid-cols-4 gap-2 min-[480px]:gap-4 min-[640px]:flex min-[640px]:gap-6">
       {countdownItems.map((item) => (
         <div
-          className="flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-[10px] border border-(--primary) text-(--primary) min-[640px]:size-25 min-[640px]:gap-1.5"
+          className="flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-[10px] border border-(--brand-primary) text-(--brand-primary) min-[640px]:size-25 min-[640px]:gap-1.5"
           key={item.label}
         >
           <dt className="order-2 text-xs min-[480px]:text-sm">

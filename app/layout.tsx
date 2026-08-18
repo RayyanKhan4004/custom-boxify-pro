@@ -111,8 +111,15 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-(--background) font-renner">
+    <html
+      lang="en"
+      className={`${geistSans.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body
+        className="min-h-full flex flex-col bg-(--surface-page) font-renner"
+        suppressHydrationWarning
+      >
         <script
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),

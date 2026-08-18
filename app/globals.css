@@ -5,25 +5,25 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--surface-page);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-body);
   --font-heading: var(--font-display);
-  --color-input: var(--input);
-  --color-border: var(--border);
+  --color-input: var(--border-strong);
+  --color-border: var(--border-subtle);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  --color-muted-foreground: var(--text-muted);
+  --color-muted: var(--surface-muted);
+  --color-secondary-foreground: var(--text-primary);
+  --color-secondary: var(--surface-raised);
+  --color-primary-foreground: var(--brand-on-primary);
+  --color-primary: var(--brand-primary);
+  --color-popover-foreground: var(--text-primary);
+  --color-popover: var(--surface-card);
+  --color-card-foreground: var(--text-primary);
+  --color-card: var(--surface-card);
 }
 
 :root {
@@ -31,24 +31,36 @@
   --font-body: "Renner*", "Renner", var(--font-geist-sans);
   --font-display: "Renner*", "Renner", var(--font-geist-sans);
 
-  /* Colors */
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --card: #1c1c1c;
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-  --primary: #d4b038;
-  --primary-foreground: var(--background);
-  --secondary: #222222;
-  --secondary-foreground: var(--foreground);
-  --muted: #1d1d1d;
-  --muted-foreground: #8a8377;
-  --accent: var(--primary);
-  --accent-foreground: var(--primary-foreground);
+  /* Brand and surface tokens */
+  --brand-primary: #d4b038;
+  --brand-on-primary: #0a0a0a;
+  --surface-page: #0a0a0a;
+  --surface-card: #1c1c1c;
+  --surface-raised: #222222;
+  --surface-muted: #1d1d1d;
+  --text-primary: #ffffff;
+  --text-muted: #8a8377;
+  --border-subtle: #272212;
+  --border-strong: #5a4b1e;
   --destructive: #d64f4f;
-  --border: #272212;
-  --input: #5a4b1e;
+
+  /* Design-system aliases */
+  --background: var(--surface-page);
+  --foreground: var(--text-primary);
+  --card: var(--surface-card);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-card);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--brand-on-primary);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--brand-primary);
+  --accent-foreground: var(--brand-on-primary);
+  --border: var(--border-subtle);
+  --input: var(--border-strong);
 }
 .font-renner {
   font-family: var(--font-body);

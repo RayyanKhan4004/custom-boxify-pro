@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { nav_links } from "../constants/nav-bar";
 import { BrandLogo, BrandLogoMark } from "../icons";
+import { PageContainer } from "./page-container";
 import { Button } from "../ui/button";
 
 type NavigationLinksProps = {
@@ -17,7 +18,7 @@ function NavigationLinks({ onNavigate }: NavigationLinksProps) {
       {nav_links.map((link) => (
         <li key={link.name}>
           <a
-            className="text-(--muted-foreground) text-base font-semibold no-underline"
+            className="text-(--text-muted) text-base font-semibold no-underline"
             href={link.action === "action_open" ? `https://wa.me/${link.id}?text=Hello%20there!` : link.id}
             onClick={onNavigate}
           >
@@ -33,8 +34,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-20 w-full border-b border-b-(--border) bg-(--background)">
-      <div className="relative mx-auto flex h-20 w-full max-w-[90rem] items-center justify-between gap-10 px-6 min-[1120px]:px-15">
+    <header className="sticky top-0 z-50 h-20 w-full border-b border-b-(--border-subtle) bg-(--surface-page)">
+      <PageContainer className="relative flex h-20 items-center justify-between gap-10">
         <BrandLogoMark className="h-auto w-[51px] overflow-visible min-[1120px]:hidden" />
         <BrandLogo className="hidden h-auto w-[294px] overflow-visible min-[1120px]:block" />
 
@@ -51,17 +52,17 @@ export default function Navbar() {
           aria-controls="mobile-navigation"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          className="z-[1] ml-auto inline-flex items-center justify-center border-0 bg-transparent p-0 text-(--foreground) min-[1120px]:hidden"
+          className="z-[1] ml-auto inline-flex items-center justify-center border-0 bg-transparent p-0 text-(--text-primary) min-[1120px]:hidden"
           onClick={() => setIsOpen((open) => !open)}
           type="button"
         >
           {isOpen ? <XIcon size={24} weight="bold" /> : <ListIcon size={24} weight="bold" />}
         </button>
-      </div>
+      </PageContainer>
 
       {isOpen && (
         <div
-          className="overflow-hidden border-t border-t-(--border) bg-(--background) min-[1120px]:hidden"
+          className="overflow-hidden border-t border-t-(--border-subtle) bg-(--surface-page) min-[1120px]:hidden"
           id="mobile-navigation"
         >
           <ul className="flex list-none flex-col gap-6 p-6">
