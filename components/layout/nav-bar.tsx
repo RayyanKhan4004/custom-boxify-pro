@@ -36,10 +36,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 h-20 w-full border-b border-b-(--border-subtle) bg-(--surface-page)">
       <PageContainer className="relative flex h-20 items-center justify-between gap-10">
-        <BrandLogoMark className="h-auto w-[51px] overflow-visible min-[1120px]:hidden" />
-        <BrandLogo className="hidden h-auto w-[294px] overflow-visible min-[1120px]:block" />
+        <BrandLogoMark className="h-auto w-[51px] overflow-visible xl:hidden" />
+        <BrandLogo className="hidden h-auto w-[294px] overflow-visible xl:block" />
 
-        <ul className="hidden items-center gap-10 min-[1120px]:flex">
+        <ul className="hidden items-center gap-10 xl:flex">
           <NavigationLinks />
           <li>
             <Button className="h-11.25" variant="outline">
@@ -52,7 +52,7 @@ export default function Navbar() {
           aria-controls="mobile-navigation"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          className="z-[1] ml-auto inline-flex items-center justify-center border-0 bg-transparent p-0 text-(--text-primary) min-[1120px]:hidden"
+          className="z-[1] ml-auto inline-flex items-center justify-center border-0 bg-transparent p-0 text-(--text-primary) xl:hidden"
           onClick={() => setIsOpen((open) => !open)}
           type="button"
         >
@@ -62,7 +62,7 @@ export default function Navbar() {
 
       {isOpen && (
         <div
-          className="overflow-hidden border-t border-t-(--border-subtle) bg-(--surface-page) min-[1120px]:hidden"
+          className="overflow-hidden border-t border-t-(--border-subtle) bg-(--surface-page) xl:hidden"
           id="mobile-navigation"
         >
           <ul className="flex list-none flex-col gap-6 p-6">

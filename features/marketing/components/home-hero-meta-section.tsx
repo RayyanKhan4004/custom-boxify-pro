@@ -63,8 +63,8 @@ function DhlLogo() {
 export function HomeHeroMetaSection() {
   return (
     <section className="bg-(--surface-page) py-8">
-      <PageContainer className="flex flex-col gap-8 min-[900px]:flex-row min-[900px]:items-center min-[900px]:justify-between">
-        <div className="flex flex-wrap items-end gap-10 min-[900px]:gap-16">
+      <PageContainer className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap items-end gap-10 lg:gap-16">
           {heroStats.map((stat) => (
             <div key={stat.label}>
               <p className="text-4xl font-bold leading-none text-(--text-primary)">
@@ -77,11 +77,11 @@ export function HomeHeroMetaSection() {
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-6 min-[760px]:gap-8">
-          <p className="border-l border-(--border-subtle) pl-7 text-sm font-medium text-(--text-muted) min-[760px]:pl-10 min-[760px]:text-base">
+        <div className="flex flex-wrap items-center gap-6 md:gap-8">
+          <p className="border-l border-(--border-subtle) pl-7 text-sm font-medium text-(--text-muted) md:pl-10 md:text-base">
             Our logistics Partners
           </p>
-          <div className="flex items-center gap-6 min-[760px]:gap-8">
+          <div className="flex items-center gap-6 md:gap-8">
             <FedExLogo />
             <DhlLogo />
           </div>

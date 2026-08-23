@@ -29,7 +29,7 @@ type MarketingHeroProps = {
 
 function HomeActions() {
   return (
-    <div className="mt-7 flex flex-wrap gap-4 min-[640px]:mt-9">
+    <div className="mt-7 flex flex-wrap gap-4 sm:mt-9">
       <Link
         className="inline-flex h-12 items-center justify-center rounded-[6px] border border-(--border-strong) px-6 text-sm font-semibold text-(--brand-primary) transition-colors hover:bg-(--surface-muted)"
         href="#packaging-style"
@@ -51,11 +51,11 @@ function CountdownActions() {
     <>
       <MarketingCountdown />
 
-      <div className="mt-8 min-[640px]:mt-12">
-        <p className="text-base text-(--text-muted) min-[640px]:text-lg">
+      <div className="mt-8 sm:mt-12">
+        <p className="text-base text-(--text-muted) sm:text-lg">
           Follow US
         </p>
-        <div className="mt-3 flex gap-6 min-[640px]:mt-4">
+        <div className="mt-3 flex gap-6 sm:mt-4">
           {socialLinks.map(({ Icon, label }) => (
             <Link
               aria-label={label}
@@ -63,7 +63,7 @@ function CountdownActions() {
               href="#"
               key={label}
             >
-              <Icon className="size-7 overflow-visible min-[640px]:size-8" />
+              <Icon className="size-7 overflow-visible sm:size-8" />
             </Link>
           ))}
         </div>
