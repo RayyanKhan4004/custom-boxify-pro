@@ -1,14 +1,12 @@
 import { SiteLayout } from "@/components/layout/site-layout";
-import React from "react";
+import { IndustriesHero } from "@/features/marketing/components/industries";
 
-function page() {
+export default function IndustriesPage() {
   return (
     <SiteLayout
-      settings={{ navbar: true, footer: true, pageContainer: true }}
+      settings={{ footer: true, navbar: true, pageContainer: false }}
     >
-        F
+      <IndustriesHero />
     </SiteLayout>
   );
 }
-
-export default page;

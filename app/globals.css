@@ -15,6 +15,8 @@
   --color-foreground: var(--text-primary);
   --font-sans: var(--font-body);
   --font-heading: var(--font-display);
+  --text-hero-heading: 4rem;
+  --text-hero-heading--line-height: 1.1;
   --color-input: var(--border-strong);
   --color-border: var(--border-subtle);
   --color-destructive: var(--destructive);
