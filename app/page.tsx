@@ -1,4 +1,4 @@
-import Navbar from "@/components/layout/nav-bar";
+import { SiteLayout } from "@/components/layout/site-layout";
 import { MARKETING_PAGE_MODE } from "@/features/marketing/constants";
 import { HomeHeroMetaSection } from "@/features/marketing/components/home-hero-meta-section";
 import { HomePageSections } from "@/features/marketing/components/home-page-sections";
@@ -8,8 +8,9 @@ export default function HomePage() {
   const showHomePage = MARKETING_PAGE_MODE === "home";
 
   return (
-    <>
-      <Navbar />
+    <SiteLayout
+      settings={{ footer: showHomePage, navbar: true, pageContainer: false }}
+    >
       <MarketingHero variant={MARKETING_PAGE_MODE} />
       {showHomePage && (
         <>
@@ -17,6 +18,6 @@ export default function HomePage() {
           <HomePageSections />
         </>
       )}
-    </>
+    </SiteLayout>
   );
 }

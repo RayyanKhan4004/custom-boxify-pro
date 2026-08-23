@@ -1,7 +1,7 @@
 import { PageContainer } from "@/components/layout/page-container";
 import { steps } from "@/features/marketing/constants";
 import styles from "../process-section.module.css";
-import { BoxArtwork } from "./box-artwork";
+import { FoldingBoxAutoplay } from "./folding-box-autoplay";
 
 export function ProcessSection() {
   return (
@@ -105,132 +105,56 @@ export function ProcessSection() {
             />
             <path className={styles.connectorTrack} d="M148 280 H320" />
             <g className={styles.connectorSourcePulse}>
-              <ellipse
-                className={styles.connectorPulseNodeTail}
-                rx="10"
-                ry="3.25"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 90 H128 Q148 90 148 110 V280"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
-              <ellipse
-                className={styles.connectorPulseNodeCore}
-                rx="4.5"
-                ry="1.5"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 90 H128 Q148 90 148 110 V280"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
+              <ellipse className={styles.connectorPulseNodeTail} rx="10" ry="3.25" />
+              <ellipse className={styles.connectorPulseNodeCore} rx="4.5" ry="1.5" />
+              <animateMotion
+                calcMode="linear"
+                dur="4.8s"
+                keyPoints="0;0;1;1"
+                keyTimes="0;0.03;0.312;1"
+                path="M0 90 H128 Q148 90 148 110 V280"
+                repeatCount="indefinite"
+                rotate="auto"
+              />
             </g>
             <g className={styles.connectorSourcePulse}>
-              <ellipse
-                className={styles.connectorPulseNodeTail}
-                rx="10"
-                ry="3.25"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 280 H148"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
-              <ellipse
-                className={styles.connectorPulseNodeCore}
-                rx="4.5"
-                ry="1.5"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 280 H148"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
+              <ellipse className={styles.connectorPulseNodeTail} rx="10" ry="3.25" />
+              <ellipse className={styles.connectorPulseNodeCore} rx="4.5" ry="1.5" />
+              <animateMotion
+                calcMode="linear"
+                dur="4.8s"
+                keyPoints="0;0;1;1"
+                keyTimes="0;0.03;0.312;1"
+                path="M0 280 H148"
+                repeatCount="indefinite"
+                rotate="auto"
+              />
             </g>
             <g className={styles.connectorSourcePulse}>
-              <ellipse
-                className={styles.connectorPulseNodeTail}
-                rx="10"
-                ry="3.25"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 470 H128 Q148 470 148 450 V280"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
-              <ellipse
-                className={styles.connectorPulseNodeCore}
-                rx="4.5"
-                ry="1.5"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.03;0.312;1"
-                  path="M0 470 H128 Q148 470 148 450 V280"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
+              <ellipse className={styles.connectorPulseNodeTail} rx="10" ry="3.25" />
+              <ellipse className={styles.connectorPulseNodeCore} rx="4.5" ry="1.5" />
+              <animateMotion
+                calcMode="linear"
+                dur="4.8s"
+                keyPoints="0;0;1;1"
+                keyTimes="0;0.03;0.312;1"
+                path="M0 470 H128 Q148 470 148 450 V280"
+                repeatCount="indefinite"
+                rotate="auto"
+              />
             </g>
             <g className={styles.connectorMergedPulse}>
-              <ellipse
-                className={styles.connectorMergedNodeTail}
-                rx="12"
-                ry="3.75"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.3155;0.498;1"
-                  path="M148 280 H320"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
-              <ellipse
-                className={styles.connectorMergedNodeCore}
-                rx="5.5"
-                ry="1.75"
-              >
-                <animateMotion
-                  calcMode="linear"
-                  dur="4.8s"
-                  keyPoints="0;0;1;1"
-                  keyTimes="0;0.3155;0.498;1"
-                  path="M148 280 H320"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </ellipse>
+              <ellipse className={styles.connectorMergedNodeTail} rx="12" ry="3.75" />
+              <ellipse className={styles.connectorMergedNodeCore} rx="5.5" ry="1.75" />
+              <animateMotion
+                calcMode="linear"
+                dur="4.8s"
+                keyPoints="0;0;1;1"
+                keyTimes="0;0.3155;0.498;1"
+                path="M148 280 H320"
+                repeatCount="indefinite"
+                rotate="auto"
+              />
             </g>
             <path
               className={styles.connectorArrow}
@@ -254,7 +178,7 @@ export function ProcessSection() {
             </svg>
           </div>
 
-          <div className={styles.boxStage}>
+          <div className={`${styles.boxStage} ${styles.foldingBoxStage}`}>
             <svg
               aria-hidden="true"
               className={styles.boxImpactOutline}
@@ -266,11 +190,7 @@ export function ProcessSection() {
                 d="M744 4 L1432 396 L1432 912 L744 1310 L52 912 L52 396 Z M52 396 L744 804 L1432 396 M744 804 V1310"
               />
             </svg>
-            <BoxArtwork
-              alt="Custom packaging box production process"
-              className="relative z-1 h-auto w-full"
-              sizes="(min-width: 1120px) 620px, 90vw"
-            />
+            <FoldingBoxAutoplay />
             <svg
               aria-hidden="true"
               className={styles.boxBandPulse}

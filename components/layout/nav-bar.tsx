@@ -3,10 +3,11 @@
 import { ListIcon, XIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import { nav_links } from "../constants/nav-bar";
+import { navLinks } from "../constants";
 import { BrandLogo, BrandLogoMark } from "../icons";
 import { PageContainer } from "./page-container";
 import { Button } from "../ui/button";
+import { getNavigationHref } from "../utils";
 
 type NavigationLinksProps = {
   onNavigate?: () => void;
@@ -15,14 +16,14 @@ type NavigationLinksProps = {
 function NavigationLinks({ onNavigate }: NavigationLinksProps) {
   return (
     <>
-      {nav_links.map((link) => (
+      {navLinks.map((link) => (
         <li key={link.name}>
           <a
             className="text-(--text-muted) text-base font-semibold no-underline"
-            href={link.action === "action_open" ? `https://wa.me/${link.id}?text=Hello%20there!` : link.id}
+            href={getNavigationHref(link)}
             onClick={onNavigate}
           >
-            {link.lable}
+            {link.label}
           </a>
         </li>
       ))}

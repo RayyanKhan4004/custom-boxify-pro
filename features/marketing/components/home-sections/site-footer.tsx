@@ -1,4 +1,4 @@
-import { BrandLogoMark } from "@/components/icons";
+import { BrandLogoSimplifiedLarge } from "@/components/icons";
 import { PageContainer } from "@/components/layout/page-container";
 import {
   footerColumns,
@@ -8,11 +8,11 @@ import Link from "next/link";
 
 export function SiteFooter() {
   return (
-    <footer className="relative border-t-2 border-(--border-subtle) bg-(--surface-page) py-16 lg:h-92.5 lg:py-0">
+    <footer className="relative border-t-2 border-(--border-subtle) bg-(--surface-page) py-16 lg:h-92.5 lg:py-0 mt-30">
       <PageContainer className="xl:pr-11.25">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_106px_103px_132px_128px] lg:gap-x-15 lg:pt-19">
           <div>
-            <BrandLogoMark
+            <BrandLogoSimplifiedLarge
               className="-mt-4.5 block overflow-visible"
               height={82}
               width={127}

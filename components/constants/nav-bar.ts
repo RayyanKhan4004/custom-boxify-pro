@@ -1,27 +1,28 @@
-export const nav_links = [
+import type { NavigationItem } from "@/components/types";
+
+export const navLinks = [
   {
-    lable: "Packaging Style",
+    label: "Packaging Style",
     name: "packaging-style",
     action: "id",
     id: "#packaging-style",
   },
   {
-    lable: "Industries",
+    label: "Industries",
     name: "industries",
-    action: "id",
-    id: "#industries",
+    action: "link",
+    link: "/industries",
   },
   {
-    lable: "Success Stories",
+    label: "Success Stories",
     name: "success-stories",
     action: "id",
     id: "#success-stories",
   },
   {
-    lable: "Speak With An Expert",
+    label: "Speak With An Expert",
     name: "speak-with-an-expert",
     action: "action_open",
     id: "+923366704385",
   },
-];
-// +92 336 6704385
+] satisfies readonly NavigationItem[];

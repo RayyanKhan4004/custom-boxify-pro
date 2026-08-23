@@ -1,2 +1,3 @@
 export type { FooterColumn, FooterLink } from "./footer";
-export type { BoxArtworkProps, SectionHeaderProps } from "./home-sections";
+export type { FoldingBoxFrame } from "./folding-box";
+export type { SectionHeaderProps } from "./home-sections";
