@@ -4,8 +4,8 @@ export const navLinks = [
   {
     label: "Packaging Style",
     name: "packaging-style",
-    action: "id",
-    id: "#packaging-style",
+    action: "link",
+    link: "/packaging-styles",
   },
   {
     label: "Industries",

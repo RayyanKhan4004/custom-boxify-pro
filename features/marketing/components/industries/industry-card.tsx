@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { MarketingCard } from "@/features/marketing/components/marketing-card";
 import type { Industry } from "@/features/marketing/types";
 
 type IndustryCardProps = {
@@ -12,9 +13,7 @@ type IndustryCardProps = {
 
 export function IndustryCard({ industry, wide = false }: IndustryCardProps) {
   return (
-    <article
-      className={`group relative flex min-h-110 flex-col overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-card) p-4 shadow-(--shadow-card) transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-(--border-strong) hover:shadow-(--shadow-button) sm:p-6 ${wide ? "lg:col-span-3" : "lg:col-span-2"}`}
-    >
+    <MarketingCard className={`min-h-110 ${wide ? "lg:col-span-3" : "lg:col-span-2"}`}>
       <div className="relative aspect-[349/240] overflow-hidden rounded-lg">
         <Image
           alt={`${industry.name} packaging`}
@@ -40,6 +39,6 @@ export function IndustryCard({ industry, wide = false }: IndustryCardProps) {
         Configure Style
         <ArrowRightIcon aria-hidden className="size-[18px] transition-transform duration-300 group-hover:translate-x-1" weight="bold" />
       </Button>
-    </article>
+    </MarketingCard>
   );
 }

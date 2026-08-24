@@ -9,7 +9,7 @@ export const footerColumns = [
   {
     title: "Site",
     links: [
-      { href: "#packaging-style", label: "Packaging Style" },
+      { href: "/packaging-styles", label: "Packaging Style" },
       { href: "#industries", label: "Industries" },
       { href: "#quote", label: "Expert" },
     ],
