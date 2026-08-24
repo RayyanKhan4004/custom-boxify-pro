@@ -7,7 +7,11 @@ export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ anchors: true, duration: 1.1, smoothWheel: true });
+    const lenis = new Lenis({
+      anchors: { duration: 1.1, offset: -80 },
+      duration: 1.1,
+      smoothWheel: true,
+    });
     let animationFrame = 0;
     const animate = (time: number) => {
       lenis.raf(time);

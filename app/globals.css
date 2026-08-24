@@ -35,6 +35,7 @@
 }
 
 :root {
+  --site-header-height: 5rem;
   /* Font families */
   --font-body: "Renner*", "Renner", var(--font-geist-sans);
   --font-display: "Renner*", "Renner", var(--font-geist-sans);
@@ -71,6 +72,10 @@
   --accent-foreground: var(--brand-on-primary);
   --border: var(--border-subtle);
   --input: var(--border-strong);
+}
+
+html {
+  scroll-padding-top: var(--site-header-height);
 }
 .font-renner {
   font-family: var(--font-body);

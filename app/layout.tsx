@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { siteConfig } from "@/lib/site-config";
+import { Providers } from "./providers";
 
 import "./globals.css";
 
@@ -126,7 +127,7 @@ export default function RootLayout({
           }}
           type="application/ld+json"
         />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
