@@ -1,5 +1,6 @@
 export { footerColumns, footerSocialLinks } from "./footer";
 export { foldingBoxFrames } from "./folding-box";
+export { industryPageItems } from "./industries";
 export {
   dimensionOptions,
   industries,

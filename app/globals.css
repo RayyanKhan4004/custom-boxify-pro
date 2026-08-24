@@ -51,6 +51,8 @@
   --border-subtle: #272212;
   --border-strong: #5a4b1e;
   --destructive: #d64f4f;
+  --shadow-card: 0 12px 24px rgb(0 0 0 / 50%);
+  --shadow-button: 0 10px 24px rgb(212 176 56 / 20%);
 
   /* Design-system aliases */
   --background: var(--surface-page);

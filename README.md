@@ -1,46 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Custom Boxify Pro
 
-## SEO configuration
+Customer-facing marketing site for Custom Boxify Pro, built with Next.js App
+Router, React, Tailwind CSS, and TypeScript.
 
-The canonical production domain is `https://www.customboxifypro.com`. Copy
-`.env.example` to `.env.local` when a deployment needs to override it with
-`NEXT_PUBLIC_SITE_URL`. This value is used for canonical URLs, Open Graph
-metadata, JSON-LD, `robots.txt`, and `sitemap.xml`.
-
-After deployment, submit `/sitemap.xml` in Google Search Console and optionally
-set `GOOGLE_SITE_VERIFICATION` to the verification token supplied by Google.
-
-## Getting Started
-
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. If that port is already used, Next.js selects the
+next available port and prints it in the terminal.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+git diff --check
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+app/                         Routes, metadata, global styling, providers
+components/                  Reusable site-wide UI and layout
+  icons/                     Brand SVG components
+  layout/                    Navbar, footer wrapper, page container
+  ui/                        Reusable form and button primitives
+  types|constants|utils/     Shared cross-feature modules
+features/marketing/          Marketing domain
+  components/home-sections/  Home-only sections
+  components/industries/     Industries page components
+  constants/                 Marketing copy, links, and data arrays
+  types/                     Marketing domain types
+lib/                         Shared application helpers/configuration
+public/                      Static images available by URL
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Routes should remain small composition files. Feature UI, content data, and
+types belong in the relevant feature folder and are exposed through barrel
+exports where shared.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Styling and components
 
-## Deploy on Vercel
+The visual system lives in `app/globals.css` as CSS variables and Tailwind theme
+tokens. Reuse shared controls from `components/ui`, including button variants,
+instead of recreating controls inside page sections. General-purpose interface
+icons use Phosphor; brand artwork remains in `components/icons`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment and SEO
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The canonical production domain is `https://www.customboxifypro.com`. Copy
+`.env.example` to `.env.local` to override `NEXT_PUBLIC_SITE_URL` for a
+deployment. It supplies canonical URLs, Open Graph metadata, JSON-LD,
+`robots.txt`, and `sitemap.xml`.
+
+After deployment, submit `/sitemap.xml` to Google Search Console. Set
+`GOOGLE_SITE_VERIFICATION` when a verification token is required.
+
+## Contributor guidance
+
+Read [AGENTS.md](./AGENTS.md) before making changes. It defines folder
+ownership, rendering/motion rules, accessibility expectations, and validation
+requirements.

@@ -4,7 +4,7 @@ export function IndustriesHero() {
   return (
     <section className="border-b border-(--border-subtle) bg-(--surface-page) py-20 lg:h-136.5 lg:py-30">
       <PageContainer className="flex h-full flex-col items-center justify-center gap-8 text-center">
-        <p className="inline-flex h-7 items-center rounded-full border border-(--brand-primary) px-4 text-xs font-semibold uppercase leading-none text-(--brand-primary)">
+        <p className="inline-flex h-7 items-center rounded-full border border-(--brand-primary) px-4 text-xs font-semibold uppercase leading-none text-(--brand-primary) py-1.5">
           Industries We Elevate
         </p>
 

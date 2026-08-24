@@ -1,5 +1,9 @@
 import { SiteLayout } from "@/components/layout/site-layout";
-import { IndustriesHero } from "@/features/marketing/components/industries";
+import {
+  IndustriesCta,
+  IndustriesGrid,
+  IndustriesHero,
+} from "@/features/marketing/components/industries";
 
 export default function IndustriesPage() {
   return (
@@ -7,6 +11,8 @@ export default function IndustriesPage() {
       settings={{ footer: true, navbar: true, pageContainer: false }}
     >
       <IndustriesHero />
+      <IndustriesGrid />
+      <IndustriesCta />
     </SiteLayout>
   );
 }
