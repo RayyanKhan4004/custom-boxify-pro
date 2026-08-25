@@ -54,7 +54,7 @@ function PulsingEdge({
   return (
     <>
       <BaseEdge id={id} markerEnd={markerEnd} path={edgePath} style={style} />
-      <circle className="flow-pulse" opacity="0" r="3">
+      <circle className="flow-pulse" opacity="0" r="4">
         <animate
           attributeName="opacity"
           dur={PULSE_CYCLE_DURATION}
@@ -184,7 +184,8 @@ const nodes: Node[] = [
   },
 ];
 
-const edgeStyle = { stroke: "var(--brand-primary)", strokeWidth: 1.5 };
+const flowLineColor = "color-mix(in srgb, var(--brand-primary) 18%, transparent)";
+const edgeStyle = { stroke: flowLineColor, strokeWidth: 1.5 };
 
 const edges: Edge[] = [
   {
@@ -220,7 +221,7 @@ const edges: Edge[] = [
   {
     data: { pulsePhase: "outgoing" } satisfies PulseEdgeData,
     id: "junction-box",
-    markerEnd: { color: "var(--brand-primary)", type: MarkerType.ArrowClosed },
+    markerEnd: { color: flowLineColor, type: MarkerType.ArrowClosed },
     source: "junction",
     sourceHandle: "output",
     style: edgeStyle,
