@@ -6,6 +6,46 @@
   overflow: visible;
 }
 
+.processFlow {
+  height: 46rem;
+  width: 100%;
+}
+
+.flowStepCard {
+  min-height: 10.75rem;
+  width: 26.5rem;
+  border-radius: 0.75rem;
+  background: var(--surface-card);
+  padding: 2.5rem 1.5rem;
+}
+
+.flowJunction {
+  height: 1px;
+  width: 1px;
+}
+
+.flowBoxNode {
+  width: 35rem;
+}
+
+.flowHandle {
+  height: 1px;
+  width: 1px;
+  min-height: 1px;
+  min-width: 1px;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+}
+
+.processFlow :global(.react-flow__renderer) {
+  overflow: visible;
+}
+
+.processFlow :global(.flow-pulse) {
+  fill: var(--brand-primary);
+}
+
 .industryAccordion {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -67,30 +107,24 @@
 .connectorPulseTail {
   stroke-width: 4;
   stroke-dasharray: 0.085 1;
-  filter: drop-shadow(0 0 4px var(--brand-primary));
   animation: connector-source-pulse 4.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
 
 .connectorPulseCore {
   stroke-width: 2.25;
   stroke-dasharray: 0.04 1;
-  filter: drop-shadow(0 0 2px var(--text-primary))
-    drop-shadow(0 0 5px var(--brand-primary));
   animation: connector-source-pulse 4.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
 
 .connectorMergedPulseTail {
   stroke-width: 4.5;
   stroke-dasharray: 0.105 1;
-  filter: drop-shadow(0 0 5px var(--brand-primary));
   animation: connector-merged-pulse 4.8s cubic-bezier(0.36, 0, 0.18, 1) infinite;
 }
 
 .connectorMergedPulseCore {
   stroke-width: 2.75;
   stroke-dasharray: 0.045 1;
-  filter: drop-shadow(0 0 3px var(--text-primary))
-    drop-shadow(0 0 6px var(--brand-primary));
   animation: connector-merged-pulse 4.8s cubic-bezier(0.36, 0, 0.18, 1) infinite;
 }
 
@@ -104,27 +138,9 @@
   fill: url("#connector-pulse-tail");
 }
 
-.connectorPulseNodeTail {
-  filter: drop-shadow(0 0 4px var(--brand-primary));
-}
-
 .connectorPulseNodeCore,
 .connectorMergedNodeCore {
   fill: url("#connector-pulse-core");
-}
-
-.connectorPulseNodeCore {
-  filter: drop-shadow(0 0 2px var(--text-primary))
-    drop-shadow(0 0 5px var(--brand-primary));
-}
-
-.connectorMergedNodeTail {
-  filter: drop-shadow(0 0 5px var(--brand-primary));
-}
-
-.connectorMergedNodeCore {
-  filter: drop-shadow(0 0 3px var(--text-primary))
-    drop-shadow(0 0 6px var(--brand-primary));
 }
 
 .connectorSourcePulse {
@@ -412,6 +428,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .processFlow :global(.flow-pulse) {
+    display: none;
+  }
+
   .connectorSourcePulse,
   .connectorMergedPulse,
   .connectorPulseTail,
