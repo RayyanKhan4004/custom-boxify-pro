@@ -1,6 +1,7 @@
 "use client";
 
 import { ListIcon, XIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useState } from "react";
 
 import { navLinks } from "../constants";
@@ -18,13 +19,23 @@ function NavigationLinks({ onNavigate }: NavigationLinksProps) {
     <>
       {navLinks.map((link) => (
         <li key={link.name}>
-          <a
-            className="text-(--text-muted) text-base font-semibold no-underline"
-            href={getNavigationHref(link)}
-            onClick={onNavigate}
-          >
-            {link.label}
-          </a>
+          {link.action === "link" ? (
+            <Link
+              className="text-(--text-muted) text-base font-semibold no-underline"
+              href={link.link}
+              onClick={onNavigate}
+            >
+              {link.label}
+            </Link>
+          ) : (
+            <a
+              className="text-(--text-muted) text-base font-semibold no-underline"
+              href={getNavigationHref(link)}
+              onClick={onNavigate}
+            >
+              {link.label}
+            </a>
+          )}
         </li>
       ))}
     </>
@@ -37,8 +48,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 h-20 w-full border-b border-b-(--border-subtle) bg-(--surface-page)">
       <PageContainer className="relative flex h-20 items-center justify-between gap-10">
-        <BrandLogoMark className="h-auto w-[51px] overflow-visible xl:hidden" />
-        <BrandLogo className="hidden h-auto w-[294px] overflow-visible xl:block" />
+        <Link aria-label="Custom Boxify Pro home" href="/">
+          <BrandLogoMark className="h-auto w-[51px] overflow-visible xl:hidden" />
+          <BrandLogo className="hidden h-auto w-[294px] overflow-visible xl:block" />
+        </Link>
 
         <ul className="hidden items-center gap-10 xl:flex">
           <NavigationLinks />

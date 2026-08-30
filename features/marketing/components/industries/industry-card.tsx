@@ -1,44 +1,35 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { MarketingCard } from "@/features/marketing/components/marketing-card";
+import { useSmoothScroll } from "@/components/providers/smooth-scroll";
 import type { Industry } from "@/features/marketing/types";
 
 type IndustryCardProps = {
   industry: Industry;
-  wide?: boolean;
 };
 
-export function IndustryCard({ industry, wide = false }: IndustryCardProps) {
+export function IndustryCard({ industry }: IndustryCardProps) {
+  const smoothScroll = useSmoothScroll();
+
   return (
-    <MarketingCard className={`min-h-110 ${wide ? "lg:col-span-3" : "lg:col-span-2"}`}>
-      <div className="relative aspect-[349/240] overflow-hidden rounded-lg">
-        <Image
+    <Link
+      aria-label={`Explore ${industry.name} packaging`}
+      className="group relative aspect-[349/240] overflow-hidden rounded-lg bg-(--surface-raised) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--brand-primary)"
+      href="/#quote"
+    >
+      <div className="absolute inset-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           alt={`${industry.name} packaging`}
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          fill
-          sizes={wide ? "(min-width: 1120px) 50vw, 100vw" : "(min-width: 1120px) 33vw, 100vw"}
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          onLoad={() => smoothScroll?.resize()}
           src={industry.image}
           style={{ objectPosition: industry.objectPosition }}
         />
       </div>
-
-      <div className="mt-5 flex flex-1 flex-col">
-        <h2 className="text-2xl font-bold leading-7 text-(--text-primary)">{industry.name}</h2>
-        <p className="mt-3 text-[15px] leading-[1.5] text-(--text-muted)">{industry.description}</p>
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-(--surface-page) to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <h3 className="text-base font-bold text-(--text-primary)">{industry.name}</h3>
       </div>
-
-      <Button
-        className="mt-5 w-full justify-between p-0 text-sm font-semibold tracking-[0.07em] uppercase hover:shadow-none sm:w-auto sm:self-start"
-        nativeButton={false}
-        render={<Link href="/#quote" />}
-        variant="link"
-      >
-        Configure Style
-        <ArrowRightIcon aria-hidden className="size-[18px] transition-transform duration-300 group-hover:translate-x-1" weight="bold" />
-      </Button>
-    </MarketingCard>
+    </Link>
   );
 }

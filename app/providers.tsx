@@ -22,5 +22,9 @@ export function Providers({ children }: ProvidersProps) {
       }),
   );
 
-  return <QueryClientProvider client={queryClient}><SmoothScroll />{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SmoothScroll>{children}</SmoothScroll>
+    </QueryClientProvider>
+  );
 }

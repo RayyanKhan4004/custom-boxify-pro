@@ -1,0 +1,1 @@
+export { useGetIndustries } from "./hooks";
