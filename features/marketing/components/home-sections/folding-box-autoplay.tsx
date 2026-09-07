@@ -3,22 +3,18 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-import { foldingBoxFrames } from "@/features/marketing/constants";
+import closedBox from "@/components/images/folding_box_autoplay_assets/06_closed_box.png";
 
 import styles from "../process-section.module.css";
 
 export function FoldingBoxAutoplay() {
   const previewRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isInViewport, setIsInViewport] = useState(
     () =>
       typeof window !== "undefined" && !("IntersectionObserver" in window),
   );
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [frameIndex, setFrameIndex] = useState(0);
-  const closedFrame = foldingBoxFrames[5];
-  const activeFrame = prefersReducedMotion
-    ? closedFrame
-    : foldingBoxFrames[frameIndex];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -58,27 +54,42 @@ export function FoldingBoxAutoplay() {
   }, []);
 
   useEffect(() => {
-    if (!isInViewport || prefersReducedMotion) return;
+    const video = videoRef.current;
 
-    const timerId = window.setTimeout(() => {
-      setFrameIndex((currentIndex) =>
-        currentIndex === foldingBoxFrames.length - 1 ? 0 : currentIndex + 1,
-      );
-    }, activeFrame.duration);
+    if (!video || !isInViewport || prefersReducedMotion) return;
 
-    return () => window.clearTimeout(timerId);
-  }, [activeFrame.duration, isInViewport, prefersReducedMotion]);
+    void video.play().catch((error: unknown) => {
+      // Pausing during navigation or a visibility change cancels pending playback.
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      console.warn("Folding box video could not autoplay:", error);
+    });
+
+    return () => video.pause();
+  }, [isInViewport, prefersReducedMotion]);
 
   return (
     <div className={styles.foldingBoxAutoplay} ref={previewRef}>
-      <Image
-        alt=""
-        aria-hidden="true"
-        className={styles.foldingBoxFrame}
-        key={activeFrame.label}
-        sizes="(min-width: 70rem) 42rem, 90vw"
-        src={activeFrame.src}
-      />
+      {prefersReducedMotion ? (
+        <Image
+          alt=""
+          aria-hidden="true"
+          className={styles.foldingBoxFrame}
+          sizes="(min-width: 70rem) 42rem, 90vw"
+          src={closedBox}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          aria-hidden="true"
+          className={styles.foldingBoxFrame}
+          loop
+          muted
+          playsInline
+          poster={closedBox.src}
+          preload="none"
+          src="/videos/box-animation-transparent-hq.webm"
+        />
+      )}
     </div>
   );
 }

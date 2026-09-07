@@ -1,5 +1,4 @@
 export { footerColumns, footerSocialLinks } from "./footer";
-export { foldingBoxFrames } from "./folding-box";
 export { industryPageItems } from "./industries";
 export { packagingStylePageItems } from "./packaging-styles";
 export {

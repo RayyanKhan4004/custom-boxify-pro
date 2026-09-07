@@ -21,6 +21,10 @@ type SelectProps = Omit<
 };
 
 const selectStyles: StylesConfig<SelectOption, false> = {
+  menuPortal: (base) => ({
+    ...base,
+    zIndex: 70,
+  }),
   control: (base, state) => ({
     ...base,
     minHeight: "3.75rem",
@@ -119,6 +123,9 @@ export function Select({ onChange, options, value, ...props }: SelectProps) {
 
   return (
     <ReactSelect
+      menuPortalTarget={document.body}
+      menuPosition="fixed"
+      menuPlacement="auto"
       {...props}
       components={{
         DropdownIndicator: () => (

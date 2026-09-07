@@ -42,7 +42,7 @@ export function PackagingStyleSection() {
             <article key={style}>
               <Link
                 aria-label={`Get a quote for ${style}`}
-                className="group block"
+                className="group relative isolate block before:pointer-events-none before:absolute before:-inset-x-2 before:-top-2 before:-bottom-6 before:-z-10 before:rounded-2xl before:border before:border-(--border-strong) before:bg-primary/15 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 focus-visible:before:opacity-100 motion-reduce:before:transition-none"
                 href="#quote"
               >
                 <div className="relative aspect-312/221 overflow-hidden rounded-xl bg-(--surface-card)">
