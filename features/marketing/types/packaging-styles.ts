@@ -1,9 +1,10 @@
-import type { StaticImageData } from "next/image";
-
 export type PackagingStyle = {
-  bestFor: string;
+  deliveryTime: string;
+  id: string;
+  imageUrl: string | null;
+  industries: string[];
+  minimumOrderQuantity: number | null;
   description: string;
-  image: StaticImageData;
   name: string;
-  specifications: readonly string[];
+  slug: string;
 };

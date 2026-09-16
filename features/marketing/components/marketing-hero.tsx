@@ -1,3 +1,5 @@
+"use client";
+
 import {
   FacebookNegativeIcon,
   InstagramNegativeIcon,
@@ -6,7 +8,7 @@ import {
 import { CustomHero } from "@/features/marketing/components/custom-hero";
 import { MarketingCountdown } from "@/features/marketing/components/marketing-countdown";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { defaultHomePageContent, useHomePageContent } from "@/features/marketing/services/home-page";
 
 const socialLinks = [
   { Icon: FacebookNegativeIcon, label: "Facebook" },
@@ -16,40 +18,34 @@ const socialLinks = [
 
 type MarketingHeroVariant = "home" | "countdown";
 
-type HeroContent = {
-  eyebrow: string;
-  title: ReactNode;
-  description: string;
-  actions: ReactNode;
-};
-
 type MarketingHeroProps = {
   variant?: MarketingHeroVariant;
 };
 
 function HomeActions() {
+  const { data = defaultHomePageContent } = useHomePageContent();
   return (
     <div className="mt-7 flex flex-wrap gap-4 sm:mt-9">
       <Link
         className="inline-flex h-12 items-center justify-center rounded-[6px] border border-(--border-strong) px-6 text-sm font-semibold text-(--brand-primary) transition-colors hover:bg-(--surface-muted)"
-        href="#packaging-style"
+        href={data.primaryCtaHref}
       >
-        Explore Packaging
+        {data.primaryCtaLabel}
       </Link>
       <Link
         className="inline-flex h-12 items-center justify-center rounded-[6px] bg-(--brand-primary) px-6 text-sm font-semibold text-(--brand-on-primary) transition-opacity hover:opacity-85"
-        href="#quote"
+        href={data.secondaryCtaHref}
       >
-        Contact Now
+        {data.secondaryCtaLabel}
       </Link>
     </div>
   );
 }
 
-function CountdownActions() {
+function CountdownActions({ targetDate }: { targetDate?: string }) {
   return (
     <>
-      <MarketingCountdown />
+      <MarketingCountdown targetDate={targetDate} />
 
       <div className="mt-8 sm:mt-12">
         <p className="text-base text-(--text-muted) sm:text-lg">
@@ -72,32 +68,24 @@ function CountdownActions() {
   );
 }
 
-const heroContentByVariant: Record<MarketingHeroVariant, HeroContent> = {
-  home: {
-    eyebrow: "CUSTOM PACKAGING, ENGINEERED",
-    title: (
-      <>
-        Every Brand Deserves A Box{" "}
-        <span className="text-(--brand-primary)">Worth Opening.</span>
-      </>
-    ),
-    description:
-      "Custom Boxify Pro is a faster way to design, quote, and produce custom packaging from first sketch to finished carton.",
-    actions: <HomeActions />,
-  },
-  countdown: {
-    eyebrow: "Something Exciting On its Way",
-    title: (
-      <>
-        Coming <span className="text-(--brand-primary)">Soon</span>
-      </>
-    ),
-    description:
-      "We're crafting a better experience for you. Our new website is launching soon.",
-    actions: <CountdownActions />,
-  },
-};
-
 export function MarketingHero({ variant = "countdown" }: MarketingHeroProps) {
-  return <CustomHero {...heroContentByVariant[variant]} />;
+  const { data = defaultHomePageContent } = useHomePageContent();
+  if (variant === "home") {
+    return (
+      <CustomHero
+        actions={<HomeActions />}
+        description={data.description}
+        eyebrow={data.eyebrow}
+        title={<>{data.title} <span className="text-(--brand-primary)">{data.titleAccent}</span></>}
+      />
+    );
+  }
+  return (
+    <CustomHero
+      actions={<CountdownActions targetDate={data.countdownTargetDate} />}
+      description="We're crafting a better experience for you. Our new website is launching soon."
+      eyebrow="Something Exciting On its Way"
+      title={<>Coming <span className="text-(--brand-primary)">Soon</span></>}
+    />
+  );
 }

@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { MARKETING_LAUNCH_DATE_ISO } from "@/features/marketing/constants";
-
 const SECOND_IN_MS = 1000;
 const MINUTE_IN_MS = 60 * SECOND_IN_MS;
 const HOUR_IN_MS = 60 * MINUTE_IN_MS;
@@ -21,9 +19,11 @@ const fallbackCountdownItems: CountdownItem[] = [
   { label: "Sec", value: "--" },
 ];
 
-function getCountdownItems(): CountdownItem[] {
+function getCountdownItems(targetDate?: string): CountdownItem[] {
+  if (!targetDate) return fallbackCountdownItems;
+
   const remainingMs = Math.max(
-    new Date(MARKETING_LAUNCH_DATE_ISO).getTime() - Date.now(),
+    new Date(`${targetDate}T00:00:00.000Z`).getTime() - Date.now(),
     0,
   );
 
@@ -40,12 +40,16 @@ function getCountdownItems(): CountdownItem[] {
   ];
 }
 
-export function MarketingCountdown() {
+type MarketingCountdownProps = {
+  targetDate?: string;
+};
+
+export function MarketingCountdown({ targetDate }: MarketingCountdownProps) {
   const [countdownItems, setCountdownItems] = useState(fallbackCountdownItems);
 
   useEffect(() => {
     const updateCountdown = () => {
-      setCountdownItems(getCountdownItems());
+      setCountdownItems(getCountdownItems(targetDate));
     };
 
     updateCountdown();
@@ -53,7 +57,7 @@ export function MarketingCountdown() {
     const timerId = window.setInterval(updateCountdown, SECOND_IN_MS);
 
     return () => window.clearInterval(timerId);
-  }, []);
+  }, [targetDate]);
 
   return (
     <dl className="mt-7 grid grid-cols-4 gap-2 xs:gap-4 sm:flex sm:gap-6">

@@ -6,7 +6,6 @@ import mailerBox from "@/components/images/packaging-styles/mailer-box.png";
 import pillowBoxes from "@/components/images/packaging-styles/pillow-boxes.png";
 import rigidBoxes from "@/components/images/packaging-styles/rigid-boxes.png";
 import sleeveBoxes from "@/components/images/packaging-styles/sleeves-boxes.png";
-import type { PackagingStyle } from "@/features/marketing/types";
 
 export const packagingStylePageItems = [
   {
@@ -105,4 +104,4 @@ export const packagingStylePageItems = [
     ],
     image: pillowBoxes,
   },
-] as const satisfies readonly PackagingStyle[];
+] as const;

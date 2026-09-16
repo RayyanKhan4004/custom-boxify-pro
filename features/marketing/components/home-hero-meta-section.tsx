@@ -1,9 +1,7 @@
-import { PageContainer } from "@/components/layout/page-container";
+"use client";
 
-const heroStats = [
-  { label: "Customers", value: "500+" },
-  { label: "Customer Satisfaction", value: "99%" },
-] as const;
+import { PageContainer } from "@/components/layout/page-container";
+import { defaultHomePageContent, useHomePageContent } from "@/features/marketing/services/home-page";
 
 function FedExLogo() {
   return (
@@ -61,6 +59,11 @@ function DhlLogo() {
 }
 
 export function HomeHeroMetaSection() {
+  const { data = defaultHomePageContent } = useHomePageContent();
+  const heroStats = [
+    { label: "Customers", value: data.customersValue },
+    { label: "Customer Satisfaction", value: data.satisfactionValue },
+  ];
   return (
     <section className="bg-(--surface-page) py-8">
       <PageContainer className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">

@@ -1,12 +1,17 @@
-import { MarketingPageHero } from "@/features/marketing/components/marketing-page-hero";
+import rigidBoxes from "@/components/images/packaging-styles/rigid-boxes.png";
+import { MarketingImageHero } from "@/features/marketing/components/marketing-image-hero";
 
 export function PackagingStylesHero() {
   return (
-    <MarketingPageHero
-      accentTitle="Styles"
-      badge="Bespoke Craftsmanship"
-      description="From heavy-duty corrugated mailers to ultra-luxe magnetic rigid gift structures, Custom Boxify Pro engineers bespoke tactical packaging designed to elevate unboxing and reinforce premium brand presence."
-      title="Our Packaging"
+    <MarketingImageHero
+      accentTitle="Product"
+      description="Explore custom boxes and packaging styles designed around your product, brand and industry. Choose a proven box style or create a fully custom packaging solution."
+      exploreHref="#styles"
+      exploreLabel="Explore Styles"
+      eyebrow="We Got You Covered"
+      image={rigidBoxes}
+      imageAlt="Custom packaging styles"
+      title="Custom Packaging Styles for Every"
     />
   );
 }
