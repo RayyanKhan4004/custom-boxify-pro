@@ -13,9 +13,12 @@ import {
 
 type SmoothScrollController = {
   resize: () => void;
+  start: () => void;
+  stop: () => void;
 };
 
 const SmoothScrollContext = createContext<SmoothScrollController | null>(null);
+const NATIVE_SCROLL_PATHS = new Set(["/packaging-styles", "/industries"]);
 
 export function useSmoothScroll(): SmoothScrollController | null {
   return useContext(SmoothScrollContext);
@@ -23,12 +26,16 @@ export function useSmoothScroll(): SmoothScrollController | null {
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const usesNativeScroll = NATIVE_SCROLL_PATHS.has(pathname);
   const lenisRef = useRef<Lenis | null>(null);
   const controller = useMemo<SmoothScrollController>(() => ({
     resize: () => lenisRef.current?.resize(),
+    start: () => lenisRef.current?.start(),
+    stop: () => lenisRef.current?.stop(),
   }), []);
 
   useEffect(() => {
+    if (usesNativeScroll) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const instance = new Lenis({
@@ -49,7 +56,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       instance.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [usesNativeScroll]);
 
   useEffect(() => {
     let secondFrame = 0;

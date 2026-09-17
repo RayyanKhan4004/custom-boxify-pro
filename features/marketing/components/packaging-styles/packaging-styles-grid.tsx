@@ -1,28 +1,69 @@
 "use client";
 
 import {
+  CheckIcon,
   FunnelSimpleIcon,
   MagnifyingGlassIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
+import { FilterDropdown } from "@/components/ui/filter-dropdown";
 import { useGetIndustries } from "@/features/marketing/services/industries";
 import { usePackagingStyles } from "@/features/marketing/services/packaging-styles";
 
 import { PackagingStyleCard } from "./packaging-style-card";
 
 export function PackagingStylesGrid() {
-  const [search, setSearch] = useState("");
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") ?? "";
+  const industriesParameter = searchParams.get("industries") ?? "";
+  const selectedIndustries = useMemo(
+    () => industriesParameter.split(",").filter(Boolean),
+    [industriesParameter],
+  );
   const [pendingIndustries, setPendingIndustries] = useState<string[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filterSearch, setFilterSearch] = useState("");
   const { data: industries = [] } = useGetIndustries("");
+  const filterIndustries = useMemo(
+    () =>
+      Array.from(
+        new Map(
+          industries
+            .filter((industry) => industry.slug)
+            .map((industry) => [industry.slug, industry]),
+        ).values(),
+      ),
+    [industries],
+  );
+  const visibleFilterIndustries = useMemo(() => {
+    const query = filterSearch.trim().toLocaleLowerCase();
+    if (!query) return filterIndustries;
+    return filterIndustries.filter((industry) =>
+      industry.name.toLocaleLowerCase().includes(query),
+    );
+  }, [filterIndustries, filterSearch]);
   const {
     data: styles = [],
     isError,
     isLoading,
   } = usePackagingStyles(search, selectedIndustries);
+
+  const updateSearchParameters = (
+    updates: Record<string, string | undefined>,
+    method: "push" | "replace" = "push",
+  ) => {
+    const parameters = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) parameters.set(key, value);
+      else parameters.delete(key);
+    });
+    const query = parameters.toString();
+    window.history[`${method}State`](null, "", query ? `${pathname}?${query}` : pathname);
+  };
 
   const toggleIndustry = (slug: string) =>
     setPendingIndustries((current) =>
@@ -30,28 +71,43 @@ export function PackagingStylesGrid() {
         ? current.filter((item) => item !== slug)
         : [...current, slug],
     );
-  useEffect(() => {
-    if (!filtersOpen) return;
-    const close = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setFiltersOpen(false);
-    };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, [filtersOpen]);
 
   const openFilters = () => {
+    if (filtersOpen) {
+      setFiltersOpen(false);
+      setFilterSearch("");
+      return;
+    }
     setPendingIndustries(selectedIndustries);
+    setFilterSearch("");
     setFiltersOpen(true);
   };
 
-  const applyFilters = () => {
-    setSelectedIndustries(pendingIndustries);
+  const closeFilters = () => {
     setFiltersOpen(false);
+    setFilterSearch("");
+  };
+
+  const applyFilters = () => {
+    updateSearchParameters({
+      industries: pendingIndustries.length
+        ? pendingIndustries.join(",")
+        : undefined,
+    });
+    closeFilters();
   };
 
   const resetFilters = () => {
     setPendingIndustries([]);
-    setSelectedIndustries([]);
+    updateSearchParameters({ industries: undefined });
+  };
+
+  const removeIndustry = (slug: string) => {
+    const nextIndustries = selectedIndustries.filter((item) => item !== slug);
+    setPendingIndustries(nextIndustries);
+    updateSearchParameters({
+      industries: nextIndustries.length ? nextIndustries.join(",") : undefined,
+    });
   };
 
   return (
@@ -76,21 +132,105 @@ export function PackagingStylesGrid() {
               <input
                 className="h-13 w-full rounded-full bg-(--surface-raised) py-3 pl-11 pr-4 text-sm text-(--text-primary) outline-none focus:ring-1 focus:ring-(--brand-primary)"
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) =>
+                  updateSearchParameters(
+                    { search: event.target.value || undefined },
+                    "replace",
+                  )
+                }
                 placeholder="Search"
               />
             </label>
-            <button
-              aria-expanded={filtersOpen}
-              aria-label="Filter by industry"
-              className="grid size-13 place-items-center rounded-full bg-(--surface-raised) text-(--text-primary) hover:text-(--brand-primary)"
-              onClick={openFilters}
-              type="button"
-            >
-              <FunnelSimpleIcon size={20} />
-            </button>
+            <div className="relative">
+              <FilterDropdown
+                title="Filter By Industry"
+                selectedCount={selectedIndustries.length}
+                isOpen={filtersOpen}
+                onOpen={openFilters}
+                onClose={closeFilters}
+                onSearchChange={setFilterSearch}
+                searchPlaceholder="Search industries"
+                searchValue={filterSearch}
+                footer={
+                  <>
+                    <button
+                      className="h-12 rounded-lg bg-(--brand-primary) font-semibold text-(--brand-on-primary)"
+                      onClick={applyFilters}
+                      type="button"
+                    >
+                      Apply
+                    </button>
+                    <button
+                      className="h-12 rounded-lg border border-(--border-strong) font-semibold text-(--brand-primary)"
+                      onClick={resetFilters}
+                      type="button"
+                    >
+                      Reset Filters
+                    </button>
+                  </>
+                }
+              >
+                <h3 className="bg-(--surface-raised) px-5 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-(--brand-primary)">
+                  Industry
+                </h3>
+                <div className="py-1">
+                  {visibleFilterIndustries.map((industry) => (
+                    <label
+                      className="group relative flex min-h-12 cursor-pointer items-center gap-3 px-5 text-base text-(--text-primary) transition-colors hover:bg-(--surface-raised)"
+                      key={industry.slug}
+                    >
+                      <input
+                        checked={pendingIndustries.includes(
+                          industry.slug ?? "",
+                        )}
+                        className="peer absolute left-5 top-1/2 size-6 -translate-y-1/2 cursor-pointer opacity-0"
+                        onChange={() =>
+                          toggleIndustry(industry.slug ?? "")
+                        }
+                        type="checkbox"
+                      />
+                      <span className="grid size-6 shrink-0 place-items-center rounded-md border-2 border-(--border-strong) bg-transparent text-transparent transition-colors peer-checked:border-(--brand-primary) peer-checked:bg-(--brand-primary) peer-checked:text-(--brand-on-primary) peer-focus-visible:ring-2 peer-focus-visible:ring-(--brand-primary) peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-(--surface-page)">
+                        <CheckIcon aria-hidden size={15} weight="bold" />
+                      </span>
+                      {industry.name}
+                    </label>
+                  ))}
+                  {visibleFilterIndustries.length === 0 && (
+                    <p className="px-5 py-8 text-center text-sm text-(--text-muted)">
+                      No industries match your search.
+                    </p>
+                  )}
+                </div>
+              </FilterDropdown>
+            </div>
           </div>
         </div>
+        {selectedIndustries.length > 0 && (
+          <div className="mt-5 flex flex-wrap gap-2" aria-label="Applied filters">
+            {selectedIndustries.map((slug) => {
+              const label =
+                filterIndustries.find((industry) => industry.slug === slug)
+                  ?.name ?? slug;
+              return (
+                <span
+                  className="inline-flex h-9 items-center gap-2 rounded-full border border-(--border-subtle) bg-(--surface-raised) px-3 text-sm text-(--text-primary)"
+                  key={slug}
+                >
+                  <FunnelSimpleIcon aria-hidden className="text-(--brand-primary)" size={15} />
+                  {label}
+                  <button
+                    aria-label={`Remove ${label} filter`}
+                    className="grid size-5 place-items-center rounded-full text-(--text-muted) transition-colors hover:bg-(--surface-page) hover:text-(--text-primary)"
+                    onClick={() => removeIndustry(slug)}
+                    type="button"
+                  >
+                    <XIcon aria-hidden size={13} />
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        )}
         {isLoading ? (
           <div className="mt-12 grid grid-cols-2 gap-7 md:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }, (_, index) => (
@@ -119,65 +259,6 @@ export function PackagingStylesGrid() {
           </p>
         )}
       </PageContainer>
-      {filtersOpen && (
-        <div
-          className="fixed inset-0 z-70 flex justify-end bg-black/60"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="packaging-filters-title"
-        >
-          <div className="flex h-full w-full max-w-[22.625rem] flex-col rounded-l-3xl border-l border-t border-(--brand-primary) bg-(--surface-page) px-10 pb-8 pt-12 shadow-2xl">
-            <div className="flex items-center justify-between">
-              <h2
-                className="font-heading text-4xl font-bold text-(--text-primary)"
-                id="packaging-filters-title"
-              >
-                Filter By Industry
-              </h2>
-              <button
-                aria-label="Close filters"
-                className="text-(--text-primary)"
-                onClick={() => setFiltersOpen(false)}
-                type="button"
-              >
-                <XIcon size={28} />
-              </button>
-            </div>
-            <div className="mt-10 flex-1 space-y-5 overflow-y-auto">
-              {industries.map((industry) => (
-                <label
-                  className="flex cursor-pointer items-center gap-3 text-base text-(--text-primary)"
-                  key={industry.slug}
-                >
-                  <input
-                    checked={pendingIndustries.includes(industry.slug ?? "")}
-                  className="size-10 rounded-lg border-2 border-(--text-primary) accent-(--brand-primary)"
-                    onChange={() => toggleIndustry(industry.slug ?? "")}
-                    type="checkbox"
-                  />
-                  {industry.name}
-                </label>
-              ))}
-            </div>
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              <button
-                className="h-13 rounded-lg bg-(--brand-primary) font-semibold text-(--brand-on-primary)"
-                onClick={applyFilters}
-                type="button"
-              >
-                Apply
-              </button>
-              <button
-                className="h-13 rounded-lg border border-(--border-strong) text-(--brand-primary)"
-                onClick={resetFilters}
-                type="button"
-              >
-                Reset Filters
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
