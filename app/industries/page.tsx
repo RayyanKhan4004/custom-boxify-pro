@@ -1,4 +1,5 @@
 import { SiteLayout } from "@/components/layout/site-layout";
+import { Suspense } from "react";
 import {
   IndustriesCta,
   IndustriesGrid,
@@ -11,7 +12,9 @@ export default function IndustriesPage() {
       settings={{ footer: true, navbar: true, pageContainer: false }}
     >
       <IndustriesHero />
-      <IndustriesGrid />
+      <Suspense fallback={null}>
+        <IndustriesGrid />
+      </Suspense>
       <IndustriesCta />
     </SiteLayout>
   );

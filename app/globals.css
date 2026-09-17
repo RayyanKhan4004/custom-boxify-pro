@@ -38,8 +38,8 @@
 :root {
   --site-header-height: 5rem;
   /* Font families */
-  --font-body: "Renner*", "Renner", var(--font-geist-sans);
-  --font-display: "Renner*", "Renner", var(--font-geist-sans);
+  --font-body: "Renner*", "Renner", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Renner*", "Renner", ui-sans-serif, system-ui, sans-serif;
 
   /* Brand and surface tokens */
   --brand-primary: #d4b038;
