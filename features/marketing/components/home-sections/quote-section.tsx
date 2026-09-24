@@ -14,9 +14,7 @@ import {
   packagingStyleOptions,
   quantityOptions,
 } from "@/features/marketing/constants";
-import {
-  submitQuoteRequest,
-} from "@/features/marketing/services/requests/requests";
+import { submitQuoteRequest } from "@/features/marketing/services/requests/requests";
 
 interface QuoteState {
   name: string;
@@ -31,6 +29,7 @@ interface QuoteState {
   height: string;
   notes: string;
   consent: boolean;
+  whatsappOptIn: boolean;
   website: string;
 }
 
@@ -47,6 +46,7 @@ const emptyState: QuoteState = {
   height: "",
   notes: "",
   consent: false,
+  whatsappOptIn: false,
   website: "",
 };
 
@@ -61,6 +61,7 @@ export function QuoteSection() {
     "idle",
   );
   const [submitError, setSubmitError] = useState("");
+  const [quoteNumber, setQuoteNumber] = useState("");
   const idempotencyKey = useRef(crypto.randomUUID());
   const inputClass =
     "h-15 rounded-xl border border-transparent bg-(--text-primary)/10 px-5 pr-12 text-sm text-(--text-primary) outline-none placeholder:text-white/50 focus:border-(--brand-primary)";
@@ -86,6 +87,9 @@ export function QuoteSection() {
       next.email = "Email cannot exceed 254 characters.";
     if (state.phone.length > 32)
       next.phone = "Phone cannot exceed 32 characters.";
+    if (state.whatsappOptIn && !/^\+[1-9]\d{7,14}$/.test(state.phone.trim()))
+      next.phone =
+        "Enter a phone number in international format, for example +15551692329, for WhatsApp updates.";
     if (state.company.length > 120)
       next.company = "Company cannot exceed 120 characters.";
     if (state.notes.length > 5000)
@@ -106,42 +110,47 @@ export function QuoteSection() {
     setStatus("submitting");
     setSubmitError("");
     try {
-      await submitQuoteRequest({
-        requestType: "custom-quote",
-        contact: {
-          name: state.name.trim(),
-          email: state.email.trim(),
-          ...(state.phone.trim() ? { phone: state.phone.trim() } : {}),
-          ...(state.company.trim() ? { company: state.company.trim() } : {}),
-        },
-        ...(state.packagingStyle
-          ? {
-              productName:
-                packagingStyleOptions.find(
-                  (option) => option.value === state.packagingStyle,
-                )?.label ?? state.packagingStyle,
-            }
-          : {}),
-        ...(state.quantity ? { quantity: Number(state.quantity) } : {}),
-        specs: {
-          ...(state.packagingStyle
-            ? { packagingStyle: state.packagingStyle }
-            : {}),
-          ...(state.material ? { material: state.material } : {}),
-          dimensions: {
-            ...(state.length ? { length: Number(state.length) } : {}),
-            ...(state.width ? { width: Number(state.width) } : {}),
-            ...(state.height ? { height: Number(state.height) } : {}),
-            unit: "in",
+      const result = await submitQuoteRequest(
+        {
+          requestType: "custom-quote",
+          contact: {
+            name: state.name.trim(),
+            email: state.email.trim(),
+            ...(state.phone.trim() ? { phone: state.phone.trim() } : {}),
+            ...(state.company.trim() ? { company: state.company.trim() } : {}),
           },
+          ...(state.packagingStyle
+            ? {
+                productName:
+                  packagingStyleOptions.find(
+                    (option) => option.value === state.packagingStyle,
+                  )?.label ?? state.packagingStyle,
+              }
+            : {}),
+          ...(state.quantity ? { quantity: Number(state.quantity) } : {}),
+          specs: {
+            ...(state.packagingStyle
+              ? { packagingStyle: state.packagingStyle }
+              : {}),
+            ...(state.material ? { material: state.material } : {}),
+            dimensions: {
+              ...(state.length ? { length: Number(state.length) } : {}),
+              ...(state.width ? { width: Number(state.width) } : {}),
+              ...(state.height ? { height: Number(state.height) } : {}),
+              unit: "in",
+            },
+          },
+          ...(state.notes.trim() ? { notes: state.notes.trim() } : {}),
+          attachments: [],
+          consent: true,
+          whatsappOptIn: state.whatsappOptIn,
+          idempotencyKey: idempotencyKey.current,
+          ...(state.website ? { website: state.website } : {}),
         },
-        ...(state.notes.trim() ? { notes: state.notes.trim() } : {}),
-        attachments: [],
-        consent: true,
-        idempotencyKey: idempotencyKey.current,
-        ...(state.website ? { website: state.website } : {}),
-      }, file ?? undefined);
+        file ?? undefined,
+      );
       setState(emptyState);
+      setQuoteNumber(result.quoteNumber);
       setFile(null);
       idempotencyKey.current = crypto.randomUUID();
       setStatus("success");
@@ -179,10 +188,7 @@ export function QuoteSection() {
           onSubmit={submit}
           className="mt-7 grid gap-x-6 gap-y-6 lg:grid-cols-[repeat(4,1fr)]"
         >
-          <QuoteField
-            label="Full name"
-            error={errors.name}
-          >
+          <QuoteField label="Full name" error={errors.name}>
             <Input
               aria-label="Full Name"
               autoComplete="name"
@@ -194,10 +200,7 @@ export function QuoteSection() {
               onChange={(event) => set("name", event.target.value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Email"
-            error={errors.email}
-          >
+          <QuoteField label="Email" error={errors.email}>
             <Input
               aria-label="Email"
               autoComplete="email"
@@ -210,10 +213,7 @@ export function QuoteSection() {
               onChange={(event) => set("email", event.target.value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Phone number"
-            error={errors.phone}
-          >
+          <QuoteField label="Phone number" error={errors.phone}>
             <Input
               aria-label="Phone Number"
               autoComplete="tel"
@@ -225,10 +225,7 @@ export function QuoteSection() {
               onChange={(event) => set("phone", event.target.value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Company"
-            error={errors.company}
-          >
+          <QuoteField label="Company" error={errors.company}>
             <Input
               aria-label="Company"
               autoComplete="organization"
@@ -281,9 +278,7 @@ export function QuoteSection() {
             )}
           </div>
 
-          <QuoteField
-            label="Packaging style"
-          >
+          <QuoteField label="Packaging style">
             <Select
               aria-label="Packaging Style"
               options={packagingStyleOptions}
@@ -292,9 +287,7 @@ export function QuoteSection() {
               onChange={(value) => set("packagingStyle", value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Material"
-          >
+          <QuoteField label="Material">
             <Select
               aria-label="Material"
               options={materialOptions}
@@ -303,9 +296,7 @@ export function QuoteSection() {
               onChange={(value) => set("material", value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Quantity"
-          >
+          <QuoteField label="Quantity">
             <Select
               aria-label="Quantity"
               options={quantityOptions}
@@ -314,9 +305,7 @@ export function QuoteSection() {
               onChange={(value) => set("quantity", value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Length"
-          >
+          <QuoteField label="Length">
             <Select
               aria-label="Length"
               options={dimensionOptions}
@@ -339,9 +328,7 @@ export function QuoteSection() {
               onChange={(event) => set("notes", event.target.value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Width"
-          >
+          <QuoteField label="Width">
             <Select
               aria-label="Width"
               options={dimensionOptions}
@@ -350,9 +337,7 @@ export function QuoteSection() {
               onChange={(value) => set("width", value)}
             />
           </QuoteField>
-          <QuoteField
-            label="Height"
-          >
+          <QuoteField label="Height">
             <Select
               aria-label="Height"
               options={dimensionOptions}
@@ -385,6 +370,22 @@ export function QuoteSection() {
               {errors.consent}
             </p>
           )}
+          <div className="flex items-start gap-2 lg:col-span-4 lg:justify-center">
+            <input
+              id="quote-whatsapp-consent"
+              checked={state.whatsappOptIn}
+              className="mt-1 h-4 w-4 accent-(--brand-primary)"
+              type="checkbox"
+              onChange={(event) => set("whatsappOptIn", event.target.checked)}
+            />
+            <label
+              htmlFor="quote-whatsapp-consent"
+              className="text-sm text-(--text-primary)"
+            >
+              Send me a WhatsApp confirmation about this quote. Enter my phone
+              in international format.
+            </label>
+          </div>
           <input
             aria-hidden
             className="hidden"
@@ -405,7 +406,7 @@ export function QuoteSection() {
             </button>
             {status === "success" && (
               <p className="mt-3 text-sm text-(--brand-primary)" role="status">
-                Your quote request was submitted successfully.
+                Your quote request #{quoteNumber} was submitted successfully.
               </p>
             )}
             {submitError && (

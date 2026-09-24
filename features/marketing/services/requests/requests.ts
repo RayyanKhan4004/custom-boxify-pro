@@ -25,13 +25,15 @@ export interface QuoteRequestPayload {
   notes?: string;
   attachments: string[];
   consent: true;
+  whatsappOptIn?: boolean;
   idempotencyKey: string;
   website?: string;
 }
 
 async function apiRequest<T>(path: string, init: RequestInit): Promise<T> {
   const headers = new Headers(init.headers);
-  if (!(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
+  if (!(init.body instanceof FormData))
+    headers.set("Content-Type", "application/json");
   const response = await fetch(`/api/v1${path}`, {
     ...init,
     headers,
@@ -54,7 +56,7 @@ async function apiRequest<T>(path: string, init: RequestInit): Promise<T> {
 export function submitQuoteRequest(
   payload: QuoteRequestPayload,
   attachment?: File,
-): Promise<{ id: string; status: string }> {
+): Promise<{ id: string; status: string; quoteNumber: string }> {
   if (attachment) {
     const form = new FormData();
     form.append("payload", JSON.stringify(payload));
